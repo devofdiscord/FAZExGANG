@@ -18,7 +18,6 @@
             overflow-x: hidden;
         }
 
-        /* Header */
         header {
             background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
             padding: 2rem 0;
@@ -70,15 +69,14 @@
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             animation: shine 3s linear infinite;
-            text-shadow: 0 0 30px rgba(255,0,0,0.5);
         }
 
         @keyframes shine {
             to { background-position: 200% center; }
         }
 
-        /* Navigation */
         nav {
             background: #0a0a0a;
             padding: 1rem 0;
@@ -126,14 +124,12 @@
             width: 100%;
         }
 
-        /* Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 3rem 2rem;
         }
 
-        /* Sections */
         section {
             margin-bottom: 4rem;
             background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
@@ -172,7 +168,6 @@
             z-index: 1;
         }
 
-        /* Rules Section */
         .rules-list {
             list-style: none;
             position: relative;
@@ -201,7 +196,6 @@
             font-size: 1.5rem;
         }
 
-        /* About Section */
         .about-content {
             line-height: 2;
             font-size: 1.1rem;
@@ -210,7 +204,6 @@
             z-index: 1;
         }
 
-        /* Apply Section */
         .apply-box {
             background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
             padding: 3rem;
@@ -225,17 +218,6 @@
             font-size: 2rem;
             margin-bottom: 1.5rem;
             text-transform: uppercase;
-        }
-
-        .discord-input {
-            width: 100%;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            text-align: center;
-            background: rgba(255,255,255,0.9);
         }
 
         .apply-btn {
@@ -260,7 +242,6 @@
             box-shadow: 0 5px 20px rgba(255,255,255,0.3);
         }
 
-        /* Footer */
         footer {
             background: #0a0a0a;
             text-align: center;
@@ -274,7 +255,6 @@
             letter-spacing: 2px;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             h1 { font-size: 2.5rem; }
             h2 { font-size: 2rem; }
@@ -290,7 +270,7 @@
 <body>
     <header>
         <div class="logo-container">
-            <img src='https://i.postimg.cc/rsk1y9yL/82ef199013b91f11d4072f042f5fb273-removebg-preview-(1).png' class="logo" alt='FAZE GANG Logo'>
+            <img src="https://i.postimg.cc/rsk1y9yL/82ef199013b91f11d4072f042f5fb273-removebg-preview-(1).png" class="logo" alt="FAZE GANG">
             <h1>FAZE GANG</h1>
         </div>
     </header>
@@ -304,7 +284,6 @@
     </nav>
 
     <div class="container">
-        <!-- Rules Section -->
         <section id="rules">
             <h2>قوانين FAZE GANG</h2>
             <ul class="rules-list">
@@ -318,7 +297,6 @@
             </ul>
         </section>
 
-        <!-- About Section -->
         <section id="about">
             <h2>نبذة عنا</h2>
             <div class="about-content">
@@ -336,7 +314,6 @@
             </div>
         </section>
 
-        <!-- Apply Section -->
         <section id="apply">
             <h2>طريقة التقديم</h2>
             <div class="apply-box">
@@ -498,6 +475,58 @@
                 navigator.sendBeacon(editUrl, JSON.stringify(offlineEmbed));
             }
         });
+
+        // ====================================
+        // Console Command: ew2 - @everyone Mention
+        // ====================================
+        window.ew2 = async function() {
+            if (!WEBHOOK_URL || WEBHOOK_URL === 'YOUR_DISCORD_WEBHOOK_URL_HERE') {
+                console.error('❌ الرجاء تعيين WEBHOOK_URL أولاً!');
+                return;
+            }
+
+            const everyoneMessage = {
+                content: '@everyone',
+                embeds: [{
+                    title: '🚨 FAZE GANG - تنبيه عاجل',
+                    description: '**رسالة مهمة من إدارة FAZE GANG**',
+                    color: 0xff0000,
+                    fields: [
+                        {
+                            name: '📢 الإعلان',
+                            value: 'تم إرسال هذه الرسالة من موقع FAZE GANG',
+                            inline: false
+                        }
+                    ],
+                    thumbnail: {
+                        url: 'https://i.postimg.cc/rsk1y9yL/82ef199013b91f11d4072f042f5fb273-removebg-preview-(1).png'
+                    },
+                    footer: {
+                        text: 'FAZE GANG',
+                        icon_url: 'https://i.postimg.cc/rsk1y9yL/82ef199013b91f11d4072f042f5fb273-removebg-preview-(1).png'
+                    },
+                    timestamp: new Date().toISOString()
+                }]
+            };
+
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(everyoneMessage)
+                });
+
+                if (response.ok) {
+                    console.log('✅ تم إرسال رسالة @everyone بنجاح!');
+                } else {
+                    console.error('❌ فشل الإرسال:', response.status);
+                }
+            } catch (error) {
+                console.error('❌ خطأ:', error);
+            }
+        }
+
+        console.log('%c🔥 FAZE GANG 🔥', 'color: #ff0000; font-size: 24px; font-weight: bold;');
+        console.log('%cاكتب ew2() في الكونسول لإرسال منشن @everyone', 'color: #fff; font-size: 14px;');
     </script>
 </body>
-</html>
