@@ -18,6 +18,7 @@
             overflow-x: hidden;
         }
 
+        /* Header */
         header {
             background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
             padding: 2rem 0;
@@ -69,14 +70,15 @@
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
             animation: shine 3s linear infinite;
+            text-shadow: 0 0 30px rgba(255,0,0,0.5);
         }
 
         @keyframes shine {
             to { background-position: 200% center; }
         }
 
+        /* Navigation */
         nav {
             background: #0a0a0a;
             padding: 1rem 0;
@@ -124,12 +126,14 @@
             width: 100%;
         }
 
+        /* Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 3rem 2rem;
         }
 
+        /* Sections */
         section {
             margin-bottom: 4rem;
             background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
@@ -168,6 +172,7 @@
             z-index: 1;
         }
 
+        /* Rules Section */
         .rules-list {
             list-style: none;
             position: relative;
@@ -190,12 +195,13 @@
         }
 
         .rules-list li::before {
-            content: '⚫';
+            content: '⚡';
             margin-left: 1rem;
             color: #ff0000;
             font-size: 1.5rem;
         }
 
+        /* About Section */
         .about-content {
             line-height: 2;
             font-size: 1.1rem;
@@ -204,6 +210,7 @@
             z-index: 1;
         }
 
+        /* Apply Section */
         .apply-box {
             background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
             padding: 3rem;
@@ -218,6 +225,17 @@
             font-size: 2rem;
             margin-bottom: 1.5rem;
             text-transform: uppercase;
+        }
+
+        .discord-input {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            text-align: center;
+            background: rgba(255,255,255,0.9);
         }
 
         .apply-btn {
@@ -242,6 +260,7 @@
             box-shadow: 0 5px 20px rgba(255,255,255,0.3);
         }
 
+        /* Footer */
         footer {
             background: #0a0a0a;
             text-align: center;
@@ -255,6 +274,7 @@
             letter-spacing: 2px;
         }
 
+        /* Responsive */
         @media (max-width: 768px) {
             h1 { font-size: 2.5rem; }
             h2 { font-size: 2rem; }
@@ -270,7 +290,7 @@
 <body>
     <header>
         <div class="logo-container">
-            <img src="https://i.postimg.cc/rsk1y9yL/82ef199013b91f11d4072f042f5fb273-removebg-preview-(1).png" class="logo" alt="FAZE GANG">
+            <img src="https://ibb.co/tpb1RCh8" alt="FAZE GANG Logo" class="logo">
             <h1>FAZE GANG</h1>
         </div>
     </header>
@@ -284,6 +304,7 @@
     </nav>
 
     <div class="container">
+        <!-- Rules Section -->
         <section id="rules">
             <h2>قوانين FAZE GANG</h2>
             <ul class="rules-list">
@@ -297,6 +318,7 @@
             </ul>
         </section>
 
+        <!-- About Section -->
         <section id="about">
             <h2>نبذة عنا</h2>
             <div class="about-content">
@@ -314,6 +336,7 @@
             </div>
         </section>
 
+        <!-- Apply Section -->
         <section id="apply">
             <h2>طريقة التقديم</h2>
             <div class="apply-box">
@@ -341,192 +364,6 @@
                 }
             });
         });
-
-        // ====================================
-        // Discord Webhook Status System
-        // ====================================
-        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1445494332244230185/nPwIXnju2Rlofz6TfGo3HVZnvMRRpDBJef9tPpDaBpWcAAjD095d1qYmtTgaQ8Fre1Jl'; // ضع رابط الويبهوك هنا
-        const WEBSITE_URL = 'https://devofdiscord.github.io/FAZExGANG/';
-        let messageId = null;
-        let uptime = 0;
-
-        async function sendOrUpdateStatus() {
-            uptime += 10;
-            
-            const hours = Math.floor(uptime / 3600);
-            const minutes = Math.floor((uptime % 3600) / 60);
-            const seconds = uptime % 60;
-            const uptimeFormatted = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
-            const statusData = {
-                websiteStatus: '🟢 Online',
-                timestamp: new Date().toISOString(),
-                uptime: uptimeFormatted,
-                onlineStatus: navigator.onLine ? '🟢 متصل' : '🔴 غير متصل'
-            };
-
-            const embed = {
-                embeds: [{
-                    title: '📊 FAZE GANG - مراقبة الموقع المباشرة',
-                    description: `**الموقع يعمل بشكل مستمر** | آخر تحديث: <t:${Math.floor(Date.now() / 1000)}:R>`,
-                    url: WEBSITE_URL,
-                    color: 0xff0000,
-                    fields: [
-                        {
-                            name: '🔗 رابط الموقع',
-                            value: `[**اضغط هنا للدخول**](${WEBSITE_URL})`,
-                            inline: false
-                        },
-                        {
-                            name: '🌐 حالة الموقع',
-                            value: statusData.websiteStatus,
-                            inline: true
-                        },
-                        {
-                            name: '⏱️ مدة التشغيل',
-                            value: `\`${statusData.uptime}\``,
-                            inline: true
-                        },
-                        {
-                            name: '🔌 حالة الاتصال',
-                            value: statusData.onlineStatus,
-                            inline: true
-                        }
-                    ],
-                    thumbnail: {
-                        url: 'https://i.postimg.cc/rsk1y9yL/82ef199013b91f11d4072f042f5fb273-removebg-preview-(1).png'
-                    },
-                    footer: {
-                        text: 'FAZE GANG • تحديث تلقائي كل 10 ثواني',
-                        icon_url: 'https://i.postimg.cc/rsk1y9yL/82ef199013b91f11d4072f042f5fb273-removebg-preview-(1).png'
-                    },
-                    timestamp: statusData.timestamp
-                }]
-            };
-
-            try {
-                if (!messageId) {
-                    const response = await fetch(`${WEBHOOK_URL}?wait=true`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(embed)
-                    });
-
-                    if (response.ok) {
-                        const data = await response.json();
-                        messageId = data.id;
-                        console.log('✅ تم إرسال رسالة المراقبة');
-                    }
-                } else {
-                    const webhookId = WEBHOOK_URL.split('/')[5];
-                    const webhookToken = WEBHOOK_URL.split('/')[6];
-                    const editUrl = `https://discord.com/api/webhooks/${webhookId}/${webhookToken}/messages/${messageId}`;
-                    
-                    const response = await fetch(editUrl, {
-                        method: 'PATCH',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(embed)
-                    });
-
-                    if (response.ok) {
-                        console.log('✅ تم تحديث الرسالة');
-                    }
-                }
-            } catch (error) {
-                console.error('❌ خطأ:', error);
-            }
-        }
-
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                sendOrUpdateStatus();
-                setInterval(sendOrUpdateStatus, 10000);
-            }, 2000);
-        });
-
-        window.addEventListener('beforeunload', () => {
-            if (messageId) {
-                const webhookId = WEBHOOK_URL.split('/')[5];
-                const webhookToken = WEBHOOK_URL.split('/')[6];
-                const editUrl = `https://discord.com/api/webhooks/${webhookId}/${webhookToken}/messages/${messageId}`;
-                
-                const offlineEmbed = {
-                    embeds: [{
-                        title: '⚠️ FAZE GANG - الموقع متوقف',
-                        description: '**تم إغلاق الموقع**',
-                        url: WEBSITE_URL,
-                        color: 0xff0000,
-                        fields: [
-                            {
-                                name: '🔗 رابط الموقع',
-                                value: `[**${WEBSITE_URL}**](${WEBSITE_URL})`,
-                                inline: false
-                            },
-                            {
-                                name: '⏱️ إجمالي مدة التشغيل',
-                                value: `\`${Math.floor(uptime / 3600).toString().padStart(2, '0')}:${Math.floor((uptime % 3600) / 60).toString().padStart(2, '0')}:${(uptime % 60).toString().padStart(2, '0')}\``,
-                                inline: false
-                            }
-                        ],
-                        timestamp: new Date().toISOString()
-                    }]
-                };
-                
-                navigator.sendBeacon(editUrl, JSON.stringify(offlineEmbed));
-            }
-        });
-
-        // ====================================
-        // Console Command: ew2 - @everyone Mention
-        // ====================================
-        window.ew2 = async function() {
-            if (!WEBHOOK_URL || WEBHOOK_URL === 'YOUR_DISCORD_WEBHOOK_URL_HERE') {
-                console.error('❌ الرجاء تعيين WEBHOOK_URL أولاً!');
-                return;
-            }
-
-            const everyoneMessage = {
-                content: '@everyone',
-                embeds: [{
-                    title: '🚨 FAZE GANG - تنبيه عاجل',
-                    description: '**رسالة مهمة من إدارة FAZE GANG**',
-                    color: 0xff0000,
-                    fields: [
-                        {
-                            name: '📢 الإعلان',
-                            value: 'تم إرسال هذه الرسالة من موقع FAZE GANG',
-                            inline: false
-                        }
-                    ],
-                    thumbnail: {
-                        url: 'https://i.postimg.cc/rsk1y9yL/82ef199013b91f11d4072f042f5fb273-removebg-preview-(1).png'
-                    },
-                    footer: {
-                        text: 'FAZE GANG',
-                        icon_url: 'https://i.postimg.cc/rsk1y9yL/82ef199013b91f11d4072f042f5fb273-removebg-preview-(1).png'
-                    },
-                    timestamp: new Date().toISOString()
-                }]
-            };
-
-            try {
-                const response = await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(everyoneMessage)
-                });
-
-                if (response.ok) {
-                    console.log('✅ تم إرسال رسالة @everyone بنجاح!');
-                } else {
-                    console.error('❌ فشل الإرسال:', response.status);
-                }
-            } catch (error) {
-                console.error('❌ خطأ:', error);
-            }
-        }
-
-        console.log('%c🔥 FAZE GANG 🔥', 'color: #ff0000; font-size: 24px; font-weight: bold;');
-        console.log('%cاكتب ew2() في الكونسول لإرسال منشن @everyone', 'color: #fff; font-size: 14px;');
     </script>
 </body>
+</html>
